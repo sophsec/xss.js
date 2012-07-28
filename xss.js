@@ -18,6 +18,19 @@ var XSS = {
   },
 
   /*
+   * Loads JavaScript into the page.
+   *
+   * @param {String} url
+   *   The URL to the JavaScript.
+   */
+  load: function(url) {
+    var script = document.createElement('script');
+    
+    script.setAttribute('type','text/javascript');
+    script.setAttribute('src',url);
+  },
+
+  /*
    * Rewrites the href attributes for all anchor links in the document.
    *
    * @param {function(href)} callback
