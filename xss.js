@@ -33,6 +33,16 @@ var XSS = {
         link.setAttribute('href',callback(link.getAttribute('href')));
       }
     }
+
+    var forms = document.getElementByTagName('form');
+
+    for (form in forms)
+    {
+      if (link.hasAttribute('action'))
+      {
+        form.setAttribute('action',callback(form.getAttribute('action')));
+      }
+    }
   },
 
   /*
