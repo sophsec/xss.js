@@ -61,5 +61,15 @@ var XSS = {
         link.onclick = callback;
       }
     }
+
+    var inputs = document.getElementByTagName('input');
+
+    for (input in inputs)
+    {
+      if (input.hasAttribute('type') && input.getAttribute('type') == 'submit')
+      {
+        input.onclick = callback;
+      }
+    }
   }
 };
