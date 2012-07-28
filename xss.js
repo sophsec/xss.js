@@ -34,15 +34,6 @@ var XSS = {
       }
     }
 
-    var forms = document.getElementByTagName('form');
-
-    for (form in forms)
-    {
-      if (link.hasAttribute('action'))
-      {
-        form.setAttribute('action',callback(form.getAttribute('action')));
-      }
-    }
   },
 
   /*
@@ -61,7 +52,33 @@ var XSS = {
         link.onclick = callback;
       }
     }
+  },
 
+  /*
+   * Rewrites the action attributes for all forms in the document.
+   *
+   * @param {function(action)} callback
+   *   The callback to rewrite the action URL of the forms.
+   */
+  rewriteForms: function(callback) {
+    var forms = document.getElementByTagName('form');
+
+    for (form in forms)
+    {
+      if (link.hasAttribute('action'))
+      {
+        form.setAttribute('action',callback(form.getAttribute('action')));
+      }
+    }
+  },
+
+  /*
+   * Hooks the click event for all submit buttons in the document.
+   *
+   * @param {function} callback
+   *   The click event callback.
+   */
+  hookForms: function(callback) {
     var inputs = document.getElementByTagName('input');
 
     for (input in inputs)
