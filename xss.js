@@ -8,13 +8,15 @@ var XSS = {
    *   The URL to request.
    */
   get: function(url) {
-    if (XSS.imgTag == null)
+    var self = this;
+
+    if (self.imgTag == null)
     {
-      XSS.imgTag = document.createElement('img');
-      XSS.imgTag.setAttribute('style', 'display: none;');
+      self.imgTag = document.createElement('img');
+      self.imgTag.setAttribute('style', 'display: none;');
     }
 
-    XSS.imgTag.setAttribute('src',url);
+    self.imgTag.setAttribute('src',url);
   },
 
   /*
@@ -39,14 +41,16 @@ var XSS = {
   rewriteLinks: function(callback) {
     var links = document.getElementsByTagName('a');
 
-    for (link in links)
-    {
-      if (link.hasAttribute('href'))
-      {
-        link.setAttribute('href',callback(link.getAttribute('href')));
-      }
-    }
+    var length = links.length;
+    for (var i = 0; i < length; i += 1) {
+      var link = links[i];
 
+      if (link.hasAttribute('href')) {
+        if (callback && (typeof callback === "function")) {
+          link.setAttribute('href', callback(link.getAttribute('href')));
+        }
+      }
+    };
   },
 
   /*
@@ -58,13 +62,16 @@ var XSS = {
   hookLinks: function(callback) {
     var links = document.getElementByTagName('a');
 
-    for (link in links)
-    {
-      if (link.hasAttribute('href'))
-      {
-        link.onclick = callback;
+    var length = links.length;
+    for (var i = 0; i < length; i += 1) {
+      var link = links[i];
+
+      if (link.hasAttribute('href')) {
+        if (callback && (typeof callback === "function")) {
+          link.onclick = callback;
+        }
       }
-    }
+    };
   },
 
   /*
@@ -76,13 +83,16 @@ var XSS = {
   rewriteForms: function(callback) {
     var forms = document.getElementByTagName('form');
 
-    for (form in forms)
-    {
-      if (link.hasAttribute('action'))
-      {
-        form.setAttribute('action',callback(form.getAttribute('action')));
+    var length = links.length;
+    for (var i = 0; i < length; i += 1) {
+      var link = links[i];
+
+      if (link.hasAttribute('action')) {
+        if (callback && (typeof callback === "function")) {
+          form.setAttribute('action', callback(form.getAttribute('action')));
+        }
       }
-    }
+    };
   },
 
   /*
@@ -94,12 +104,15 @@ var XSS = {
   hookForms: function(callback) {
     var inputs = document.getElementByTagName('input');
 
-    for (input in inputs)
-    {
-      if (input.hasAttribute('type') && input.getAttribute('type') == 'submit')
-      {
-        input.onclick = callback;
+    var length = links.length;
+    for (var i = 0; i < length; i += 1) {
+      var link = links[i];
+
+      if (input.hasAttribute('type') && (input.getAttribute('type') === 'submit')) {
+        if (callback && (typeof callback === "function")) {
+          input.onclick = callback;
+        }
       }
-    }
+    };
   }
 };
