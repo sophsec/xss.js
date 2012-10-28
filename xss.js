@@ -40,8 +40,8 @@ var XSS = {
    */
   rewriteLinks: function(callback) {
     var links = document.getElementsByTagName('a');
-
     var length = links.length;
+
     for (var i = 0; i < length; i += 1) {
       var link = links[i];
 
@@ -60,9 +60,9 @@ var XSS = {
    *   The click event callback.
    */
   hookLinks: function(callback) {
-    var links = document.getElementByTagName('a');
-
+    var links = document.getElementsByTagName('a');
     var length = links.length;
+
     for (var i = 0; i < length; i += 1) {
       var link = links[i];
 
@@ -81,13 +81,13 @@ var XSS = {
    *   The callback to rewrite the action URL of the forms.
    */
   rewriteForms: function(callback) {
-    var forms = document.getElementByTagName('form');
+    var forms = document.getElementsByTagName('form');
+    var length = forms.length;
 
-    var length = links.length;
     for (var i = 0; i < length; i += 1) {
-      var link = links[i];
+      var form = forms[i];
 
-      if (link.hasAttribute('action')) {
+      if (form.hasAttribute('action')) {
         if (callback && (typeof callback === "function")) {
           form.setAttribute('action', callback(form.getAttribute('action')));
         }
@@ -102,11 +102,11 @@ var XSS = {
    *   The click event callback.
    */
   hookForms: function(callback) {
-    var inputs = document.getElementByTagName('input');
+    var inputs = document.getElementsByTagName('input');
+    var length = inputs.length;
 
-    var length = links.length;
     for (var i = 0; i < length; i += 1) {
-      var link = links[i];
+      var input = inputs[i];
 
       if (input.hasAttribute('type') && (input.getAttribute('type') === 'submit')) {
         if (callback && (typeof callback === "function")) {
