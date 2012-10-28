@@ -168,5 +168,5 @@ var XSS = {
         callback(element.text);
       }
     });
-  },
+  }
 };
