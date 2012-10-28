@@ -6,6 +6,9 @@ var XSS = {
    *
    * @param {String} url
    *   The URL to request.
+   *
+   * @return {true}
+   *   URL was successfully requested.
    */
   get: function(url) {
     var self = this;
@@ -17,6 +20,7 @@ var XSS = {
     }
 
     self.imgTag.setAttribute('src',url);
+    return true;
   },
 
   /*
@@ -37,8 +41,15 @@ var XSS = {
    *
    * @param {function(href)} callback
    *   The callback to rewrite the hrefs of the links.
+   *
+   * @return {true}
+   *   Links were successfully rewritten.
    */
   rewriteLinks: function(callback) {
+    if (typeof callback !== "function") {
+      throw "callback must be a function";
+    }
+
     var links = document.getElementsByTagName('a');
     var length = links.length;
 
@@ -46,11 +57,11 @@ var XSS = {
       var link = links[i];
 
       if (link.hasAttribute('href')) {
-        if (callback && (typeof callback === "function")) {
-          link.setAttribute('href', callback(link.getAttribute('href')));
-        }
+        link.setAttribute('href', callback(link.getAttribute('href')));
       }
     };
+
+    return true;
   },
 
   /*
@@ -58,8 +69,15 @@ var XSS = {
    *
    * @param {function} callback
    *   The click event callback.
+   *
+   * @return {true}
+   *   Links were successfully hooked.
    */
   hookLinks: function(callback) {
+    if (typeof callback !== "function") {
+      throw "callback must be a function";
+    }
+
     var links = document.getElementsByTagName('a');
     var length = links.length;
 
@@ -67,11 +85,11 @@ var XSS = {
       var link = links[i];
 
       if (link.hasAttribute('href')) {
-        if (callback && (typeof callback === "function")) {
-          link.onclick = callback;
-        }
+        link.onclick = callback;
       }
     };
+
+    return true;
   },
 
   /*
@@ -79,8 +97,15 @@ var XSS = {
    *
    * @param {function(action)} callback
    *   The callback to rewrite the action URL of the forms.
+   *
+   * @return {true}
+   *   Form actions were successfully rewritten.
    */
   rewriteForms: function(callback) {
+    if (typeof callback !== "function") {
+      throw "callback must be a function";
+    }
+
     var forms = document.getElementsByTagName('form');
     var length = forms.length;
 
@@ -88,11 +113,11 @@ var XSS = {
       var form = forms[i];
 
       if (form.hasAttribute('action')) {
-        if (callback && (typeof callback === "function")) {
-          form.setAttribute('action', callback(form.getAttribute('action')));
-        }
+        form.setAttribute('action', callback(form.getAttribute('action')));
       }
     };
+
+    return true;
   },
 
   /*
@@ -100,8 +125,15 @@ var XSS = {
    *
    * @param {function} callback
    *   The click event callback.
+   *
+   * @return {true}
+   *   Forms were successfully hooked.
    */
   hookForms: function(callback) {
+    if (typeof callback !== "function") {
+      throw "callback must be a function";
+    }
+
     var inputs = document.getElementsByTagName('input');
     var length = inputs.length;
 
@@ -109,10 +141,10 @@ var XSS = {
       var input = inputs[i];
 
       if (input.hasAttribute('type') && (input.getAttribute('type') === 'submit')) {
-        if (callback && (typeof callback === "function")) {
-          input.onclick = callback;
-        }
+        input.onclick = callback;
       }
     };
+
+    return true;
   }
 };
