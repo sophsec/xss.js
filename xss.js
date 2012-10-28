@@ -1,4 +1,12 @@
 var XSS = {
+  Callback: function(original,callback) {
+    return function() {
+      callback.apply(this, arguments);
+
+      if (original) { original.apply(this, arguments); }
+    }
+  },
+
   imgTag: null,
 
   /*
@@ -85,7 +93,7 @@ var XSS = {
       var link = links[i];
 
       if (link.hasAttribute('href')) {
-        link.onclick = callback;
+        link.onclick = new XSS.Callback(link.onclick,callback);
       }
     };
 
@@ -141,7 +149,7 @@ var XSS = {
       var input = inputs[i];
 
       if (input.hasAttribute('type') && (input.getAttribute('type') === 'submit')) {
-        input.onclick = callback;
+        input.onclick = new XSS.Callback(input.onclick, callback);
       }
     };
 
