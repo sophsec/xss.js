@@ -1,9 +1,8 @@
 var XSS = {
-  Callback: function(original,callback) {
+  Callback: function(first,second) {
     return function() {
-      callback.apply(this, arguments);
-
-      if (original) { original.apply(this, arguments); }
+      if (first) { first.apply(this, arguments); }
+      if (second) { second.apply(this, arguments); }
     }
   },
 
